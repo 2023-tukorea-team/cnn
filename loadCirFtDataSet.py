@@ -1,5 +1,4 @@
 import os
-import json
 import sys
 import numpy as np
 import matplotlib.pyplot as plt
@@ -19,13 +18,15 @@ def findCsvFilesInDir(dir):
 				ret.append(filePath);
 	return ret;
 
-def getDataSetFromFile(pathArr):
+def loadCirFtDataSet(pathArr):
 	X = np.empty((0, num_features));
 	Y = np.empty((0,));
 	for path in pathArr :
 		data = pd.read_csv(path, header=None)
-		X = np.append(X, data.iloc[:, :-1].values, axis=0)  # X에 데이터 추가
+		X = np.append(X, data.iloc[:, :-1].values, axis=0)
 		Y = np.append(Y, data.iloc[:, -1].values, axis=0)
 	return X, Y;
 
-X, Y = getDataSetFromFile(findCsvFilesInDir(sys.argv[1]));
+if __name__ == "__main__" :
+	X, Y = loadCirFtDataSet(findCsvFilesInDir("dataSet"));
+	print(len(X));
